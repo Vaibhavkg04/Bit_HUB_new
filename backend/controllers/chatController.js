@@ -1,6 +1,6 @@
-
 import Message from '../models/Message.js';
 
+// Get all messages
 export const getMessages = async (req, res) => {
   try {
     const messages = await Message.find().sort({ createdAt: 1 });
@@ -10,11 +10,19 @@ export const getMessages = async (req, res) => {
   }
 };
 
+// Add a message with optional image
 export const addMessage = async (req, res) => {
   try {
-    const message = new Message(req.body);
-    await message.save();
-    res.status(201).json(message);
+    const { username, content } = req.body;
+
+    const newMessage = new Message({
+      username,
+      content,
+      image: req.file ? req.file.path : "", // Save Cloudinary URL
+    });
+
+    await newMessage.save();
+    res.status(201).json(newMessage);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }

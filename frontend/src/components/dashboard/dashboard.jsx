@@ -4,7 +4,7 @@ import "./dashboard.css";
 import io from "socket.io-client";
 import { useNavigate } from "react-router-dom";
 
-const socket = io("http://localhost:5000");
+const socket = io("http://localhost:5001");
 function Dashboard() {
 	const navigate = useNavigate();
 	function InteractSeniors() {

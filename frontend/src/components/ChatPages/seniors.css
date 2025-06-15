@@ -145,3 +145,13 @@ body {
 .chat-send-btn:hover {
 	background-color: #0b5ed7;
 }
+
+.message-image {
+	width: 200px;
+	border-radius: 8px;
+	margin-top: 8px;
+}
+.chat-file-input {
+	margin: 5px;
+}
+
