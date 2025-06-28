@@ -8,9 +8,9 @@ function App() {
 
 	return (
 		<>	
-			 {/* <LoginForm/> */}
-			{/*  <RegisterForm/> */} 
-			<Dashboard />
+			  <LoginForm/>
+			 {/* <RegisterForm/>   */}
+			{/* <Dashboard /> */}
 		</>
 	);
 }

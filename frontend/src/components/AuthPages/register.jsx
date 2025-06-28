@@ -85,7 +85,7 @@ const RegisterForm = () => {
     <div className="container">
       <div className="form-card">
         <div className="form-header">
-          <h2>Student Registration</h2>
+          <h2>User Registration</h2>
           <p>Join our academic community</p>
         </div>
 

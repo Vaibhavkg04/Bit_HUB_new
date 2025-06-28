@@ -87,3 +87,19 @@ export const loginUser = async (req, res) => {
     res.status(500).json({ message: 'Server error during login' });
   }
 };
+
+export const getUserProfile = async (req, res) => {
+  try {
+    const { email } = req.user; // Decoded from JWT
+    const user = await User.findOne({ email }).select('-password'); // exclude password
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    res.status(200).json({ success: true, user });
+  } catch (err) {
+    console.error('Error fetching user profile:', err);
+    res.status(500).json({ message: 'Server error' });
+  }
+};

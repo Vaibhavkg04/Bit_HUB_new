@@ -5,6 +5,8 @@ import "./index.css";
 import App from "./App.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Chat from "./components/ChatPages/seniors.jsx";
+import RegisterForm from "./components/AuthPages/register.jsx";
+import Dashboard from "./components/dashboard/dashboard.jsx";
 // ✅ Define router here
 const router = createBrowserRouter([
 	{
@@ -12,8 +14,16 @@ const router = createBrowserRouter([
 		element: <App />,
 	},
 	{
+		path: "/dashboard",
+		element: <Dashboard />,
+	},
+	{
 		path: "/InteractSeniors",
 		element: <Chat />,
+	},
+	{
+		path: "/Register",
+		element: <RegisterForm />,
 	},
 ]);
 

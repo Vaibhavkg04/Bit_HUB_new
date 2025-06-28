@@ -13,6 +13,43 @@ const Chat = () => {
 
 	const currentUser = "Ushgcfer"; // Replace with dynamic value if needed
 
+		const [name, setName] = useState({
+			name: "",
+		});
+	
+		const [loading, setLoading] = useState(true);
+	
+		// Fetch user profile from backend
+		useEffect(() => {
+			const fetchProfile = async () => {
+				try {
+					const token = localStorage.getItem("token");
+	
+					const res = await fetch("http://localhost:5001/api/auth/profile", {
+						method: "GET",
+						headers: {
+							"Content-Type": "application/json",
+							Authorization: `Bearer ${token}`,
+						},
+					});
+	
+					const data = await res.json();
+	
+					if (res.ok && data.user) {
+						setName({ name: data.user.name || "" });
+					} else {
+						console.error("Failed to load profile:", data.message);
+					}
+				} catch (err) {
+					console.error("Error fetching profile:", err);
+				} finally {
+					setLoading(false);
+				}
+			};
+	
+			fetchProfile();
+		}, []);
+
 	useEffect(() => {
 		axios
 			.get("http://localhost:5001/api/messages")
@@ -34,7 +71,7 @@ const Chat = () => {
 		if (!input.trim() && !image) return;
 
 		const formData = new FormData();
-		formData.append("username", currentUser);
+		formData.append("username", name.name);
 		formData.append("content", input);
 		if (image) {
 			formData.append("image", image);
@@ -64,7 +101,7 @@ const Chat = () => {
 
 				<div className="chat-messages">
 					{messages.map((msg, idx) => {
-						const isCurrentUser = msg.username === currentUser;
+						const isCurrentUser = msg.username === name.name;
 						return (
 							<div
 								key={idx}

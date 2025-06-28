@@ -28,7 +28,9 @@ body {
 	align-items: center;
 	box-shadow: 0 4px 20px rgba(99, 102, 241, 0.08);
 }
-
+ h1 .hello{
+	font-size: 4px;
+}
 .logo {
 	background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 	color: white;
@@ -171,7 +173,7 @@ body {
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
 	background-clip: text;
-	font-size: 3.5rem;
+	font-size: 3rem;
 	margin-bottom: 0.5rem;
 	font-weight: 700;
 }
