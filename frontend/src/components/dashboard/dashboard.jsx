@@ -59,7 +59,9 @@ function Dashboard() {
 		// 	[e.target.name]: e.target.value,
 		// });
 	};
-
+	const search = ()=>{
+		navigate('/searchPeople')
+	}
 	const handleUpdate = () => {
 		alert("Profile updated successfully!");
 		// Optional: Send PUT request to update profile
@@ -68,9 +70,12 @@ function Dashboard() {
 	const InteractSeniors = () => {
 		navigate("/InteractSeniors");
 	};
+	const InteractAlumni = () => {
+		navigate("/InteractAlumni")
+	}
 
 	return (
-		<div className="app">
+		<div className="app bbody">
 			{/* Header */}
 			<header className="header">
 				<div className="logo">BIT Comm. Hub</div>
@@ -115,17 +120,21 @@ function Dashboard() {
 					{/* Action Cards */}
 					<div className="action-grid">
 						<div className="action-card">
-							<h3>Report Hostel or Mess Issue?</h3>
+							<h3>Report Hostel or Mess Issue</h3>
 						</div>
-						<div className="action-card">
-							<h3>Anything to ask to Your Professors?</h3>
-						</div>
-						<div className="action-card">
-							<h3>Having Academic Doubts?</h3>
-						</div>
+						<button onClick={search}>
+							<div className="action-card">
+								<h3>Search People</h3>
+							</div>
+						</button>
+						<button onClick={InteractAlumni}>
+							<div className="action-card">
+								<h3>Allumini Interaction</h3>
+							</div>
+						</button>
 						<button onClick={InteractSeniors}>
 							<div className="action-card">
-								<h3>Want to interact from seniors?</h3>
+								<h3>Within College</h3>
 							</div>
 						</button>
 					</div>

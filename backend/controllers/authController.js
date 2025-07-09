@@ -19,7 +19,7 @@ export const sendOtp = async (req, res) => {
 
 // 👉 Register User (after OTP verified)
 export const registerUser = async (req, res) => {
-  const {image, name, email, password, branch, batch, hostel } = req.body;
+  const { name, email, password, branch, batch, hostel } = req.body;
 
   if (!name || !email || !password || !branch || !batch || !hostel) {
     return res.status(400).json({ message: 'All fields are required' });
@@ -101,5 +101,41 @@ export const getUserProfile = async (req, res) => {
   } catch (err) {
     console.error('Error fetching user profile:', err);
     res.status(500).json({ message: 'Server error' });
+  }
+};
+
+
+
+export const searchUsers = async (req, res) => {
+  const { name, email, batch } = req.body;
+  console.log(".askjdnfkwndawknwakdknnndakjndk.jwndekj.wendkj");
+  console.log(req.body);
+
+  try {
+    const query = {
+      $or: [
+        name ? { name: { $regex: name, $options: 'i' } } : null,
+        email ? { email: { $regex: email, $options: 'i' } } : null,
+        batch ? { batch: { $regex: batch, $options: 'i' } } : null
+      ].filter(Boolean) 
+    };
+
+    if (query.$or.length === 0) {
+      return res.status(400).json({ success: false, message: 'Please enter at least one search field.' });
+    }
+
+    const users = await User.find(query);
+
+    res.status(200).json({
+      success: true,
+      users
+    });
+
+  } catch (error) {
+    console.error('Search Error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Server error while searching users.'
+    });
   }
 };
