@@ -4,10 +4,12 @@ import mongoose from 'mongoose';
 import { Server } from 'socket.io';
 import chatRoutes from './routes/chatRoutes.js'; // REST API routes
 import AlumniRoutes from './routes/AlumnichatRoutes.js';
+
 import setupSocket from './socket.js'; // Socket.IO setup
 import cors from 'cors';
 import dotenv from 'dotenv';
 import authRoutes from './routes/authRoutes.js';
+import HMroutes from './routes/HMroutes.js'
 
 
 
@@ -29,8 +31,11 @@ app.use(express.urlencoded({ extended: true }));
 
 // Routes
 app.use('/api/messages', chatRoutes);
-app.use('/api/messages/Alumni', AlumniRoutes); // REST API route for messages
+app.use('/api/messages/Alumni', AlumniRoutes); 
+app.use('/api/messages/HM', AlumniRoutes); 
+// REST API route for messages
 app.use('/api/auth', authRoutes);
+// app.use('/api/Pic', Picture);
 // Socket.IO setup
 setupSocket(io);
 

@@ -2,7 +2,8 @@ import React, { useEffect, useState, useRef } from "react";
 import io from "socket.io-client";
 import axios from "axios";
 import "./seniors.css";
-
+import Nav from "../NavBar/nav";
+import { useNavigate } from "react-router-dom";
 const socket = io("http://localhost:5001");
 
 const AlumniChat = () => {
@@ -10,6 +11,7 @@ const AlumniChat = () => {
 	const [input, setInput] = useState("");
 	const [image, setImage] = useState(null);
 	const messagesEndRef = useRef(null);
+	const navigate = useNavigate();
 
 	const currentUser = "Ushgcfer"; // Replace with dynamic value if needed
 
@@ -90,9 +92,20 @@ const AlumniChat = () => {
 			console.error("Message send failed", err);
 		}
 	};
+	useEffect(() => {
+			const token = localStorage.getItem("token");
+			console.log("Token:", token);
+			if (!token) {
+				navigate("/landing");
+			}
+		}, []); 
 
 	return (
+		<div className="all ">
+			<Nav/>
 		<div className="chat-container">
+      
+
 			<div className="chat-box">
 				<div className="chat-header">
 					<h2>Chat</h2>
@@ -147,6 +160,7 @@ const AlumniChat = () => {
 						Send
 					</button>
 				</div>
+			</div>
 			</div>
 		</div>
 	);

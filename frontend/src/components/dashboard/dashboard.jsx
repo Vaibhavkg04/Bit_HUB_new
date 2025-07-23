@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./dashboard.css";
 import io from "socket.io-client";
 import { useNavigate } from "react-router-dom";
+import Nav from "../NavBar/nav";
 
 const socket = io("http://localhost:5001");
 
@@ -13,11 +14,11 @@ function Dashboard() {
 		email: "",
 		batch: "",
 		branch: "",
+		mobile: "",
 	});
 
 	const [loading, setLoading] = useState(true);
 
-	// Fetch user profile from backend
 	useEffect(() => {
 		const fetchProfile = async () => {
 			try {
@@ -39,6 +40,7 @@ function Dashboard() {
 						email: data.user.email || "",
 						batch: data.user.batch || "",
 						branch: data.user.branch || "",
+						mobile: data.user.mobile || "",
 					});
 				} else {
 					console.error("Failed to load profile:", data.message);
@@ -53,41 +55,19 @@ function Dashboard() {
 		fetchProfile();
 	}, []);
 
-	const handleInputChange = (e) => {
-		// setProfile({
-		// 	...profile,
-		// 	[e.target.name]: e.target.value,
-		// });
-	};
-	const search = ()=>{
-		navigate('/searchPeople')
-	}
-	const handleUpdate = () => {
-		alert("Profile updated successfully!");
-		// Optional: Send PUT request to update profile
-	};
+	// Navigation handlers
+	const Report_issue = () => navigate("/HostelMess_Isuue");
+	const search = () => navigate("/searchPeople");
+	const InteractSeniors = () => navigate("/InteractSeniors");
+	const InteractAlumni = () => navigate("/InteractAlumni");
 
-	const InteractSeniors = () => {
-		navigate("/InteractSeniors");
-	};
-	const InteractAlumni = () => {
-		navigate("/InteractAlumni")
-	}
+	// Check if user is a current student
+	const isCurrentStudent = Number(profile.batch) >= new Date().getFullYear();
 
 	return (
 		<div className="app bbody">
 			{/* Header */}
-			<header className="header">
-				<div className="logo">BIT Comm. Hub</div>
-				<nav className="nav">
-					<button className="nav-btn">🏠</button>
-					<button className="nav-btn">💻</button>
-					<button className="nav-btn">👥</button>
-					<button className="nav-btn">📚</button>
-					<button className="nav-btn">🎓</button>
-				</nav>
-				<div className="profile-icon">👤</div>
-			</header>
+			<Nav />
 
 			{/* Main Content */}
 			<main className="main">
@@ -96,11 +76,11 @@ function Dashboard() {
 					<div className="card">
 						<h3>Important Links</h3>
 						<ul>
-							<li><a href="#notice">Notice</a></li>
-							<li><a href="#erp">ERP</a></li>
-							<li><a href="#club">Club Detail</a></li>
-							<li><a href="#welfare">Welfare Society</a></li>
-							<li><a href="#contact">Contact BIT</a></li>
+							<li><a href="https://bitmesra.ac.in/Other-Department-Pages/content/1/205/103" target="_blank">Notice</a></li>
+							<li><a href="http://pportal.bitmesra.ac.in/home.htm" target="_blank">ERP</a></li>
+							<li><a href="https://2plznx.csb.app/" target="_blank">Club Detail</a></li>
+							<li><a href="https://bitwelfaresociety.com/" target="_blank">Welfare Society</a></li>
+							<li><a href="https://bitmesra.ac.in/show/contacts/1" target="_blank">Contact BIT</a></li>
 						</ul>
 					</div>
 				</aside>
@@ -109,7 +89,7 @@ function Dashboard() {
 				<section className="content">
 					{/* Welcome Card */}
 					<div className="welcome-card">
-						<h1 className="hello">Hello { profile.name}</h1>
+						<h1>Hello {profile.name}</h1>
 						<h2>Welcome to BIT Community Hub</h2>
 						<p>
 							A digital space designed for learning and connection. Dive in,
@@ -119,9 +99,13 @@ function Dashboard() {
 
 					{/* Action Cards */}
 					<div className="action-grid">
-						<div className="action-card">
-							<h3>Report Hostel or Mess Issue</h3>
-						</div>
+						{isCurrentStudent && (
+							<button onClick={Report_issue}>
+								<div className="action-card">
+									<h3>Report Hostel or Mess Issue</h3>
+								</div>
+							</button>
+						)}
 						<button onClick={search}>
 							<div className="action-card">
 								<h3>Search People</h3>
@@ -129,14 +113,16 @@ function Dashboard() {
 						</button>
 						<button onClick={InteractAlumni}>
 							<div className="action-card">
-								<h3>Allumini Interaction</h3>
+								<h3>Alumni Interaction</h3>
 							</div>
 						</button>
-						<button onClick={InteractSeniors}>
-							<div className="action-card">
-								<h3>Within College</h3>
-							</div>
-						</button>
+						{isCurrentStudent && (
+							<button onClick={InteractSeniors}>
+								<div className="action-card">
+									<h3>Within College</h3>
+								</div>
+							</button>
+						)}
 					</div>
 				</section>
 
@@ -150,47 +136,24 @@ function Dashboard() {
 							<div className="profile-form">
 								<div className="form-group">
 									<label>Name:</label>
-									<input
-										type="text"
-										name="name"
-										value={profile.name}
-										onChange={handleInputChange}
-										placeholder="Enter your name"
-									/>
+									<input type="text" value={profile.name} readOnly />
 								</div>
 								<div className="form-group">
 									<label>Email:</label>
-									<input
-										type="email"
-										name="email"
-										value={profile.email}
-										onChange={handleInputChange}
-										placeholder="Enter your email"
-									/>
+									<input type="email" value={profile.email} readOnly />
 								</div>
 								<div className="form-group">
 									<label>Batch:</label>
-									<input
-										type="text"
-										name="batch"
-										value={profile.batch}
-										onChange={handleInputChange}
-										placeholder="Enter your batch"
-									/>
+									<input type="text" value={profile.batch} readOnly />
 								</div>
 								<div className="form-group">
 									<label>Branch:</label>
-									<input
-										type="text"
-										name="branch"
-										value={profile.branch}
-										onChange={handleInputChange}
-										placeholder="Enter your branch"
-									/>
+									<input type="text" value={profile.branch} readOnly />
 								</div>
-								<button className="update-btn" onClick={handleUpdate}>
-									Update
-								</button>
+								<div className="form-group">
+									<label>Mobile:</label>
+									<input type="text" value={profile.mobile} readOnly />
+								</div>
 							</div>
 						</>
 					)}

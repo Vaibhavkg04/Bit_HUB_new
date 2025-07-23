@@ -1,16 +1,20 @@
-import React, { useState } from "react";
-
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Dashboard from "./components/dashboard/dashboard";
-import RegisterForm from "./components/AuthPages/register";
-import LoginForm from "./components/AuthPages/login";
-function App() {
-	const [count, setCount] = useState(0);
 
+function App() {
+	const navigate = useNavigate();
+
+	useEffect(() => {
+		const token = localStorage.getItem("token");
+		console.log("Token:", token);
+		if (!token) {
+			navigate("/landing");
+		}
+	}, []); 
 	return (
-		<>	
-			  <LoginForm/>
-			 {/* <RegisterForm/>   */}
-			{/* <Dashboard /> */}
+		<>
+			<Dashboard />
 		</>
 	);
 }

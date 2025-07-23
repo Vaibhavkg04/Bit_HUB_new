@@ -2,30 +2,25 @@ import React, { useEffect, useState, useRef } from "react";
 import io from "socket.io-client";
 import axios from "axios";
 import "./seniors.css";
+import Nav from "../NavBar/nav";
 import { useNavigate } from "react-router-dom";
 
-import Nav from "../NavBar/nav";
+
 const socket = io("http://localhost:5001");
 
-const Chat = () => {
-	useEffect(() => {
-			const token = localStorage.getItem("token");
-			// console.log("Token:", token);
-			if (!token) {
-				navigate("/landing");
-			}
-		}, []); 
+const H_M_Chat = () => {
 	const [messages, setMessages] = useState([]);
 	const [input, setInput] = useState("");
 	const [image, setImage] = useState(null);
 	const messagesEndRef = useRef(null);
+	const navigate = useNavigate();
 
 	const currentUser = "Ushgcfer"; // Replace with dynamic value if needed
 
 		const [name, setName] = useState({
 			name: "",
 		});
-	const navigate = useNavigate();
+	
 		const [loading, setLoading] = useState(true);
 	
 		// Fetch user profile from backend
@@ -61,7 +56,7 @@ const Chat = () => {
 
 	useEffect(() => {
 		axios
-			.get("http://localhost:5001/api/messages")
+			.get("http://localhost:5001/api/messages/HM")
 			.then((res) => setMessages(res.data))
 			.catch(console.error);
 
@@ -87,7 +82,7 @@ const Chat = () => {
 		}
 
 		try {
-			const res = await axios.post("http://localhost:5001/api/messages", formData, {
+			const res = await axios.post("http://localhost:5001/api/messages/HM", formData, {
 				headers: {
 					"Content-Type": "multipart/form-data",
 				},
@@ -99,12 +94,20 @@ const Chat = () => {
 			console.error("Message send failed", err);
 		}
 	};
+	useEffect(() => {
+			const token = localStorage.getItem("token");
+			// console.log("Token:", token);
+			if (!token) {
+				navigate("/landing");
+			}
+		}, []); 
 
 	return (
-		<div className="all"><Nav/>
-		<div className="chat-container">
-     
 
+		<div className="all"><Nav/>
+
+		<div className="chat-container">
+      
 			<div className="chat-box">
 				<div className="chat-header">
 					<h2>Chat</h2>
@@ -161,9 +164,8 @@ const Chat = () => {
 				</div>
 			</div>
 		</div>
-		</div>
-
+</div>
 	);
 };
 
-export default Chat;
+export default H_M_Chat;

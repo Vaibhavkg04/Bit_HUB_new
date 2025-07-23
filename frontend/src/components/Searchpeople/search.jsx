@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useState ,useEffect } from "react";
 import axios from "axios";
 import './search.css';
+import Nav from "../NavBar/nav";
+import { useNavigate } from "react-router-dom";
 
 const Search = () => {
   const [formData, setData] = useState({ name: '', email: '', batch: '' });
@@ -9,6 +11,7 @@ const Search = () => {
   const handleChange = (e) => {
     setData({ ...formData, [e.target.name]: e.target.value });
   };
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -27,9 +30,17 @@ const Search = () => {
       alert("Server error");
     }
   };
+  useEffect(() => {
+      const token = localStorage.getItem("token");
+      console.log("Token:", token);
+      if (!token) {
+        navigate("/landing");
+      }
+    }, []); 
 
   return (
     <div className="form-container ">
+      <Nav/>
       <div className="form_">
         <form onSubmit={handleSubmit} className="user-form">
         <h2 className="form-title">Search Through Keywords</h2>
@@ -78,7 +89,8 @@ const Search = () => {
                 <th>Name</th>
                 <th>Email</th>
                 <th>Batch</th>
-                <th>Hostel</th>
+                <th>Branch</th>
+                <th>Mobile No.</th>
               </tr>
             </thead>
             <tbody>
@@ -87,7 +99,8 @@ const Search = () => {
                   <td>{user.name}</td>
                   <td>{user.email}</td>
                   <td>{user.batch}</td>
-                  <td>{user.hostel}</td>
+                  <td>{user.branch}</td>
+                  <td>{user.mobile}</td>
                 </tr>
               ))}
             </tbody>

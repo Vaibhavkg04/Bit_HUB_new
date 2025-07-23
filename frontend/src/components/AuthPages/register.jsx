@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import emailjs from 'emailjs-com';
 import './register.css';
+import { useNavigate } from 'react-router-dom';
 
 const RegisterForm = () => {
+  const navigate = useNavigate();
   const [form, setForm] = useState({
     name: '',
     email: '',
@@ -11,6 +13,7 @@ const RegisterForm = () => {
     branch: '',
     batch: '',
     hostel: '',
+    mobile:'',
   });
 
   const [otp, setOtp] = useState('');
@@ -56,6 +59,7 @@ const RegisterForm = () => {
         await axios.post('http://localhost:5001/api/auth/register', form);
         setVerified(true);
         alert('Registration successful!');
+        navigate("/login");
       } catch (err) {
         alert('Error saving user');
       }
@@ -65,7 +69,7 @@ const RegisterForm = () => {
     setLoading(false);
   };
 
-  const isFormValid = form.name && form.email && form.password && form.branch && form.batch && form.hostel;
+  const isFormValid = form.name && form.email && form.password && form.branch && form.batch && form.hostel && form.mobile;
 
   if (verified) {
     return (
@@ -86,7 +90,7 @@ const RegisterForm = () => {
       <div className="form-card">
         <div className="form-header">
           <h2>User Registration</h2>
-          <p>Join our academic community</p>
+          <p>Join our  community</p>
         </div>
 
         {!otpSent ? (
@@ -133,17 +137,24 @@ const RegisterForm = () => {
                 <option value="">Select Branch</option>
                 <option value="CS">Computer Science</option>
                 <option value="ECE">Electronics & Communication</option>
+                <option value="EEE">Electrical And Electronics </option>
+                <option value="ME">Mechanical </option>
+                <option value="CE">Civil</option>
+                <option value="PE">Production</option>
               </select>
             </div>
 
             <div className="form-group">
               <label>Batch Year</label>
-              <select name="batch" onChange={handleChange} value={form.batch} required>
-                <option value="">Select Batch</option>
-                <option value="2025">2025</option>
-                <option value="2026">2026</option>
-                <option value="2027">2027</option>
-              </select>
+              
+              <input
+                name="batch"
+                type="number"
+                placeholder="Enter your batch Year"
+                onChange={handleChange}
+                value={form.batch}
+                required
+              />
             </div>
 
             <div className="form-group">
@@ -151,7 +162,20 @@ const RegisterForm = () => {
               <select name="hostel" onChange={handleChange} value={form.hostel} required>
                 <option value="">Select Hostel</option>
                 <option value="Hostel 1">Hostel 1</option>
+                <option value="None">None</option>
               </select>
+            </div>
+             <div className="form-group">
+              <label>Mobile Number</label>
+              
+              <input
+                name="mobile"
+                type="number"
+                placeholder="Enter your Mobile no."
+                onChange={handleChange}
+                value={form.mobile}
+                required
+              />
             </div>
 
             <button
@@ -181,6 +205,7 @@ const RegisterForm = () => {
                 className="otp-input"
               />
             </div>
+            
 
             <button
               onClick={verifyAndRegister}

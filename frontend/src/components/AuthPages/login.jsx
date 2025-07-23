@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState ,useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import './LoginForm.css'; // Link to the CSS file
+import './LoginForm.css'; 
 
 const LoginForm = () => {
   const navigate = useNavigate();
@@ -25,6 +25,15 @@ const LoginForm = () => {
     console.error(err);
   }
 };
+// const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    // console.log("Token:", token);
+    if (token) {
+      navigate("/");
+    }
+  }, []); 
 
 
   const goToRegister = () => {
@@ -57,6 +66,18 @@ const LoginForm = () => {
             Not registered? Register here
           </button>
         </div>
+        <br />
+        <div className="mt-6 text-center bg-gray-100 p-4 rounded-md shadow-sm">
+  <h4 className="text- font-semibold text-gray-700 mb-10">Demo Credentials</h4>
+  
+  <p className="text-sm text-gray-600">
+    Email: <span className="font-medium text-gray-800">vaibhavkgupta.2004@gmail.com</span>
+  </p>
+  <p className="text-sm text-gray-600">
+    Password: <span className="font-medium text-gray-800">vvv</span>
+  </p>
+</div>
+
       </div>
     </div>
   );

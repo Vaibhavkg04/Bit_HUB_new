@@ -19,9 +19,9 @@ export const sendOtp = async (req, res) => {
 
 // 👉 Register User (after OTP verified)
 export const registerUser = async (req, res) => {
-  const { name, email, password, branch, batch, hostel } = req.body;
+  const { name, email, password, branch, batch, hostel ,mobile } = req.body;
 
-  if (!name || !email || !password || !branch || !batch || !hostel) {
+  if (!name || !email || !password || !branch || !batch || !hostel||!mobile) {
     return res.status(400).json({ message: 'All fields are required' });
   }
 
@@ -40,6 +40,7 @@ export const registerUser = async (req, res) => {
       branch,
       batch,
       hostel,
+      mobile,
     });
 
     await newUser.save();
@@ -108,7 +109,7 @@ export const getUserProfile = async (req, res) => {
 
 export const searchUsers = async (req, res) => {
   const { name, email, batch } = req.body;
-  console.log(".askjdnfkwndawknwakdknnndakjndk.jwndekj.wendkj");
+  // console.log(".askjdnfkwndawknwakdknnndakjndk.jwndekj.wendkj");
   console.log(req.body);
 
   try {
