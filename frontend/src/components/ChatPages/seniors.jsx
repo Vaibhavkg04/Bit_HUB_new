@@ -5,7 +5,7 @@ import "./seniors.css";
 import { useNavigate } from "react-router-dom";
 
 import Nav from "../NavBar/nav";
-const socket = io("http://localhost:5001");
+const socket = io("");
 
 const Chat = () => {
 	useEffect(() => {
@@ -20,7 +20,7 @@ const Chat = () => {
 	const [image, setImage] = useState(null);
 	const messagesEndRef = useRef(null);
 
-	const currentUser = "Ushgcfer"; // Replace with dynamic value if needed
+	const currentUser = "Ushgcfer"; 
 
 		const [name, setName] = useState({
 			name: "",
@@ -34,7 +34,7 @@ const Chat = () => {
 				try {
 					const token = localStorage.getItem("token");
 	
-					const res = await fetch("http://localhost:5001/api/auth/profile", {
+					const res = await fetch("/api/auth/profile", {
 						method: "GET",
 						headers: {
 							"Content-Type": "application/json",
@@ -61,7 +61,7 @@ const Chat = () => {
 
 	useEffect(() => {
 		axios
-			.get("http://localhost:5001/api/messages")
+			.get("/api/messages")
 			.then((res) => setMessages(res.data))
 			.catch(console.error);
 
@@ -87,7 +87,7 @@ const Chat = () => {
 		}
 
 		try {
-			const res = await axios.post("http://localhost:5001/api/messages", formData, {
+			const res = await axios.post("/api/messages", formData, {
 				headers: {
 					"Content-Type": "multipart/form-data",
 				},

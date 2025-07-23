@@ -4,7 +4,8 @@ import mongoose from 'mongoose';
 import { Server } from 'socket.io';
 import chatRoutes from './routes/chatRoutes.js'; // REST API routes
 import AlumniRoutes from './routes/AlumnichatRoutes.js';
-
+import path from 'path';
+import { fileURLToPath } from 'url';
 import setupSocket from './socket.js'; // Socket.IO setup
 import cors from 'cors';
 import dotenv from 'dotenv';
@@ -37,6 +38,21 @@ app.use('/api/messages/HM', AlumniRoutes);
 app.use('/api/auth', authRoutes);
 // app.use('/api/Pic', Picture);
 // Socket.IO setup
+
+
+// Required for ES Modules to get __dirname
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Serve static files from the Vite build
+const frontendPath = path.join(__dirname, '../frontend/dist');
+app.use(express.static(frontendPath));
+
+// Fallback: serve index.html for any non-API route
+app.get('*', (req, res) => {
+  res.sendFile(path.join(frontendPath, 'index.html'));
+});
+
 setupSocket(io);
 
 // MongoDB connection

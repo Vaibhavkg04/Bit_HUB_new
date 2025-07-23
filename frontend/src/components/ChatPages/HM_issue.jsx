@@ -6,7 +6,7 @@ import Nav from "../NavBar/nav";
 import { useNavigate } from "react-router-dom";
 
 
-const socket = io("http://localhost:5001");
+const socket = io("");
 
 const H_M_Chat = () => {
 	const [messages, setMessages] = useState([]);
@@ -29,7 +29,7 @@ const H_M_Chat = () => {
 				try {
 					const token = localStorage.getItem("token");
 	
-					const res = await fetch("http://localhost:5001/api/auth/profile", {
+					const res = await fetch("/api/auth/profile", {
 						method: "GET",
 						headers: {
 							"Content-Type": "application/json",
@@ -56,7 +56,7 @@ const H_M_Chat = () => {
 
 	useEffect(() => {
 		axios
-			.get("http://localhost:5001/api/messages/HM")
+			.get("/api/messages/HM")
 			.then((res) => setMessages(res.data))
 			.catch(console.error);
 
@@ -82,7 +82,7 @@ const H_M_Chat = () => {
 		}
 
 		try {
-			const res = await axios.post("http://localhost:5001/api/messages/HM", formData, {
+			const res = await axios.post("/api/messages/HM", formData, {
 				headers: {
 					"Content-Type": "multipart/form-data",
 				},

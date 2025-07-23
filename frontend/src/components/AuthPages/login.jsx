@@ -15,7 +15,7 @@ const LoginForm = () => {
   const login = async () => {
   console.log('Sending:', form);
   try {
-    const res = await axios.post('http://localhost:5001/api/auth/login', form);
+    const res = await axios.post('/api/auth/login', form);
     setToken(res.data.token);
     localStorage.setItem('token', res.data.token);
     alert('Login successful!');

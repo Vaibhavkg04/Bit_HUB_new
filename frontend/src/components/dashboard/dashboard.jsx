@@ -4,7 +4,7 @@ import io from "socket.io-client";
 import { useNavigate } from "react-router-dom";
 import Nav from "../NavBar/nav";
 
-const socket = io("http://localhost:5001");
+const socket = io("");
 
 function Dashboard() {
 	const navigate = useNavigate();
@@ -24,7 +24,7 @@ function Dashboard() {
 			try {
 				const token = localStorage.getItem("token");
 
-				const res = await fetch("http://localhost:5001/api/auth/profile", {
+				const res = await fetch("/api/auth/profile", {
 					method: "GET",
 					headers: {
 						"Content-Type": "application/json",

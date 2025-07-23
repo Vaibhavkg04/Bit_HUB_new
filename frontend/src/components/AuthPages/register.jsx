@@ -28,7 +28,7 @@ const RegisterForm = () => {
   const sendOtp = async () => {
     setLoading(true);
     try {
-      const res = await axios.post('http://localhost:5001/api/auth/send-otp', { email: form.email });
+      const res = await axios.post('/api/auth/send-otp', { email: form.email });
       const serverOtp = res.data.otp;
 
       await emailjs.send(
@@ -56,7 +56,7 @@ const RegisterForm = () => {
     setLoading(true);
     if (otp === localStorage.getItem('serverOtp')) {
       try {
-        await axios.post('http://localhost:5001/api/auth/register', form);
+        await axios.post('/api/auth/register', form);
         setVerified(true);
         alert('Registration successful!');
         navigate("/login");

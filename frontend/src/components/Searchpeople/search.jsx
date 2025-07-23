@@ -17,7 +17,7 @@ const Search = () => {
     e.preventDefault();
     console.log(formData)
     try {
-      const res = await axios.post("http://localhost:5001/api/auth/searchProfile", formData);
+      const res = await axios.post("/api/auth/searchProfile", formData);
       if (res.data.success) {
         setResults(res.data.users);
       } else {
