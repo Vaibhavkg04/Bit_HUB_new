@@ -33,14 +33,14 @@ app.use(express.urlencoded({ extended: true }));
 // Routes
 app.use('/api/messages', chatRoutes);
 app.use('/api/messages/Alumni', AlumniRoutes); 
-app.use('/api/messages/HM', AlumniRoutes); 
+app.use('/api/messages/HM', HMroutes); 
 // REST API route for messages
 app.use('/api/auth', authRoutes);
 // app.use('/api/Pic', Picture);
 // Socket.IO setup
 
 
-// Required for ES Modules to get __dirname
+//  for ES Modules to get __dirname
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
