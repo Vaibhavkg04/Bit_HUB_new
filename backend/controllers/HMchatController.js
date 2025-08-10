@@ -1,4 +1,4 @@
-import Message from '../models/Alumni.js';
+import Message from '../models/HostelMess.js';
 
 // Get all messages
 export const HMgetMessages = async (req, res) => {
